@@ -3,8 +3,6 @@ from app import db, bcrypt
 from app.models.user import User
 from flask import request
 
-from backend.app.models import user
-
 # This file defines the API endpoints related to user operations, 
 # such as registration and login. It uses Flask-RESTX to create a namespace 
 # for user routes and defines request parsers and response models for Swagger documentation.
