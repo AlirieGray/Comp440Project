@@ -1,5 +1,8 @@
 import { ChakraProvider, defaultSystem, Flex } from '@chakra-ui/react'
 import Login from "./pages/Login"
+import SignUp from "./pages/SignUp"
+import Dashboard from "./pages/Dashboard"
+import { Routes, Route } from 'react-router'
 
 function App() {
   return (
@@ -10,7 +13,11 @@ function App() {
             alignItems={'center'}
             justifyContent={'center'}
         >
-            <Login></Login>
+            <Routes>
+                <Route path={'/'} element={<Dashboard />}/>
+                <Route path={'/login'} element={<Login />}/>
+                <Route path={'/signup'} element={<SignUp />}/>
+            </Routes>
         </Flex>
     </ChakraProvider>
   );
