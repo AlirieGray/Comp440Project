@@ -69,14 +69,14 @@ class Register(Resource):
         if User.query.filter_by(phone=phone).first():
             user_ns.abort(400, "Phone already exists")
 
-            # #Hash the password, but not yet. I want to check if it gets it properly stored first.
-        #hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        # #Hash the password, but not yet. I want to check if it gets it properly stored first.
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         # Create the user
 
         user = User(username=username,
-                    #password=hashed_password, #not yet.
-                    password=password, #remove later once above is enabled.
+                    password=hashed_password, #not yet.
+                    #password=password, #remove later once above is enabled.
                     firstName=firstName,
                     lastName=lastName,
                     email=email,
@@ -94,8 +94,8 @@ user_response = user_ns.model('UserResponse', {
     'username': fields.String(description='Unique username',example='Jdoe123'),
     'firstName': fields.String(description='First name',example='John'),
     'lastName': fields.String(description='Last name',example='Doe'),
-    'password': fields.String(description='password',example='password123'), #Unhashed for testing, change to below latter.
-    #'password': fields.String(description='Hashed password',example='$2b$12$KIXQJHj1Z5e5s5s5s5s5u5u5u5u5u5u5u5u5u5u5u5u5u'), 
+    #'password': fields.String(description='password',example='password123'), #Unhashed for testing, change to below latter.
+    'password': fields.String(description='Hashed password',example='$2b$12$KIXQJHj1Z5e5s5s5s5s5u5u5u5u5u5u5u5u5u5u5u5u5u'), 
     'email': fields.String(description='Email address',example='johndoe@example.com'),
     'phone': fields.String(description='Phone number',example='1234567890')
 })
@@ -110,7 +110,7 @@ class UserList(Resource):
     
 # The login endpoint  
 login_model = user_ns.model('LoginUser', {
-    'username': fields.String(required=True, example='testuser'), #usernames are case-sentitive.
+    'username': fields.String(required=True, example='test123'), #usernames are case-sentitive.
     'password': fields.String(required=True, example='password123')
 })
 
@@ -134,14 +134,18 @@ class Login(Resource):
             user_ns.abort(401, "Invalid username or password")
 
         # Temporary plaintext comparison
-        if user.password != password:
-            user_ns.abort(401, "Invalid username or password")
+        #if user.password != password:
+            #user_ns.abort(401, "Invalid username or password")
 
         # Future implementation with hashed passwords:
-        #if not bcrypt.check_password_hash(user.password, password):
-        #    user_ns.abort(401, "Invalid username or password")
+        if not bcrypt.check_password_hash(user.password, password):
+            user_ns.abort(401, "Invalid username or password")
 
         return {
             "message": "Login successful",
-            "username": user.username
+            "username": user.username,
+            "firstName": user.firstName,
+            "lastName": user.lastName, 
+            "email": user.email,
+            "phone": user.phone
         }, 200
