@@ -26,7 +26,7 @@ export function useLogin(username, password) {
                 localStorage.setItem('email', resJSON['email'])
                 localStorage.setItem('phone', resJSON['phone'])
                 
-                navigate("/home")
+                navigate("/")
             }).catch((err) => {
                 console.error(err)
             })

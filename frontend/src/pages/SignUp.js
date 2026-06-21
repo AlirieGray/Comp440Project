@@ -1,9 +1,11 @@
-﻿import { Field, Input, Flex, Text } from "@chakra-ui/react"
+﻿import {Field, Input, Flex, Text, Button} from "@chakra-ui/react"
 import {
     PasswordInput,
 } from "../components/ui/password-input"
 import { Link } from 'react-router'
 import { useState } from "react"
+import {useLogin} from "../hooks/login";
+import {useRegister} from "../hooks/register";
 
 function SignUp() {
     const [username, setUsername] = useState("")
@@ -13,6 +15,12 @@ function SignUp() {
     const [first, setFirst] = useState("")
     const [last, setLast] = useState("")
     const [phone, setPhone] = useState("")
+    const [register] = useRegister(username, password, passwordConfirmed, phone, email, first, last)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        register()
+    }
 
     return (
         <Flex width={500} flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>
@@ -52,6 +60,8 @@ function SignUp() {
                 <Field.Label>Confirm Password</Field.Label>
                 <PasswordInput value={passwordConfirmed} onChange={(e) => setPasswordConfirmed(e.target.value)} placeholder="Confirm Password" />
             </Field.Root>
+
+            <Button onClick={e => handleSubmit(e)}>Log In</Button>
             
             <Text>Already have an account? <Link style={{color: 'blue'}} to='/login'> Login </Link> </Text>
         </Flex>
