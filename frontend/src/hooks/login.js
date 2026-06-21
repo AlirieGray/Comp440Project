@@ -13,32 +13,23 @@ export function useLogin(username, password) {
 
     const login = async () => {
         try {
-            fetch('https://localhost:7190/login', requestOptions).then((res) => {
+            fetch('http://localhost:5000/api/users/login', requestOptions).then((res) => {
                 if (res.status !== 200) {
                     throw new Error("Could not login")
                 } else {
                     return res.json()
                 }
             }).then((resJSON) => {
-                const meReqOptions = {
-                    method: 'GET',
-                    headers: {
-                        //'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    }
-                }
-                return fetch('https://localhost:7260/api/users/me', meReqOptions)
-            }).then(meRes => {
-                return meRes.json()
-            }).then(meJSON => {
-                console.log(meJSON)
-                    // localStorage.setItem('firstName', meJSON['firstName'])
-                    // localStorage.setItem('lastName', meJSON['lastName'])
+                console.log(resJSON)
+                localStorage.setItem('firstName', resJSON['firstName'])
+                localStorage.setItem('lastName', resJSON['lastName'])
+                localStorage.setItem('email', resJSON['email'])
+                localStorage.setItem('phone', resJSON['phone'])
+                
                 navigate("/home")
             }).catch((err) => {
                 console.error(err)
             })
-
         } catch (err) {
             console.error(err)
         }

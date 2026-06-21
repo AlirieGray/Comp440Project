@@ -1,4 +1,4 @@
-﻿import { Field, Input, Flex, Text } from "@chakra-ui/react"
+﻿import { Field, Input, Flex, Text, Button } from "@chakra-ui/react"
 import {
     PasswordInput,
 } from "../components/ui/password-input"
@@ -10,19 +10,26 @@ function Login() {
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
     const [login] = useLogin(username, password)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        login()
+    }
     
     return (
         <Flex width={500} flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>
             <Text marginBottom={25} fontSize={36}>Login</Text>
             <Field.Root>
                 <Field.Label>Username</Field.Label>
-                <Input value={username} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your username" />
+                <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter your username" />
             </Field.Root>
 
             <Field.Root>
                 <Field.Label>Password</Field.Label>
                 <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
             </Field.Root>
+
+            <Button onClick={e => handleSubmit(e)}>Log In</Button>
         <Text>No account yet? <Link style={{color: 'blue'}} to='/signup'> Sign up here! </Link> </Text>
         </Flex>
     );
