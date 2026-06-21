@@ -15,7 +15,7 @@ function SignUp() {
     const [first, setFirst] = useState("")
     const [last, setLast] = useState("")
     const [phone, setPhone] = useState("")
-    const [register] = useRegister(username, password, passwordConfirmed, phone, email, first, last)
+    const [register] = useRegister(username, password, passwordConfirmed, first, last, phone, email)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -48,7 +48,7 @@ function SignUp() {
             
             <Field.Root marginBottom={'10px'}>
                 <Field.Label>Username</Field.Label>
-                <Input value={username} onChange={(e) => setPassword(e.target.value)} placeholder="Select a username" />
+                <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Select a username" />
             </Field.Root>
 
             <Field.Root marginBottom={'10px'}>
@@ -61,7 +61,7 @@ function SignUp() {
                 <PasswordInput value={passwordConfirmed} onChange={(e) => setPasswordConfirmed(e.target.value)} placeholder="Confirm Password" />
             </Field.Root>
 
-            <Button onClick={e => handleSubmit(e)}>Log In</Button>
+            <Button onClick={e => handleSubmit(e)}>Register</Button>
             
             <Text>Already have an account? <Link style={{color: 'blue'}} to='/login'> Login </Link> </Text>
         </Flex>

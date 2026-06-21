@@ -2,13 +2,13 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router'
 
-export function useRegister(username, password, passwordConfirmed, phone, email, firstName, lastName) {
+export function useRegister(username, password, passwordConfirmed, firstName, lastName, phone, email) {
     const navigate = useNavigate()
 
     const registerReqOptions = {
         method: 'POST',
         headers: { 'Content-type': 'application/json'},
-        body: JSON.stringify({username, password, passwordConfirmed, phone, email, firstName, lastName})
+        body: JSON.stringify({username, password, passwordConfirmed, firstName, lastName, phone, email})
     }
 
     const loginReqOptions = {

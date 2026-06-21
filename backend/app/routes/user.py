@@ -43,7 +43,7 @@ class Register(Resource):
         email = (data.get("email") or "").strip().lower()
 
         password = data.get("password") or ""
-        passwordConfirmed = data.get("password_confirmed") or ""
+        passwordConfirmed = data.get("passwordConfirmed") or ""
         #no stripping for passwords, since spaces could be valid characters in passwords.
 
 
