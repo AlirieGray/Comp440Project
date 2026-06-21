@@ -24,4 +24,5 @@ yarn-error.log*
 
 # Backend
 */__pycache__/ 
-*/routes.txt
+backend/routes/routes.txt
+backend/instance/app.db
