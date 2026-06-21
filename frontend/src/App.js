@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { ChakraProvider, defaultSystem, Flex } from '@chakra-ui/react'
+import Login from "./pages/Login"
+import SignUp from "./pages/SignUp"
+import Dashboard from "./pages/Dashboard"
+import { Routes, Route } from 'react-router'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <ChakraProvider value={defaultSystem}>
+        <Flex
+            minHeight={'100vh'}
+            flexDirection={'column'}
+            alignItems={'center'}
+            justifyContent={'center'}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+            <Routes>
+                <Route path={'/'} element={<Dashboard />}/>
+                <Route path={'/login'} element={<Login />}/>
+                <Route path={'/signup'} element={<SignUp />}/>
+            </Routes>
+        </Flex>
+    </ChakraProvider>
   );
 }
 

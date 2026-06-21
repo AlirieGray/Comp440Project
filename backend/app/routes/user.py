@@ -12,7 +12,7 @@ user_ns = Namespace('users', description='User operations')
 register_model = user_ns.model('RegisterUser', {
     'username': fields.String(required=True, example='test123'),
     'password': fields.String(required=True, example='password123'),
-    'password_confirmed': fields.String(required=True, example='password123'), #so it asks the user to confirm their password, which is a common practice to prevent typos
+    'passwordConfirmed': fields.String(required=True, example='password123'), #so it asks the user to confirm their password, which is a common practice to prevent typos
     'firstName': fields.String(required=True, example='John'),
     'lastName': fields.String(required=True, example='Doe'),
     'email': fields.String(required=True, example='johndoe@example.com'),
@@ -26,7 +26,7 @@ class Register(Resource):
     # {
     # "username": "testuser",
     # "password": "password123",
-    # "password_confirmed": "password123",
+    # "passwordConfirmed": "password123",
     # "firstName": "Test",
     # "lastName": "User",
     # "email": "test@example.com",
@@ -43,7 +43,7 @@ class Register(Resource):
         email = (data.get("email") or "").strip().lower()
 
         password = data.get("password") or ""
-        password_confirmed = data.get("password_confirmed") or ""
+        passwordConfirmed = data.get("passwordConfirmed") or ""
         #no stripping for passwords, since spaces could be valid characters in passwords.
 
 
@@ -51,10 +51,10 @@ class Register(Resource):
         lastName = (data.get("lastName") or "").strip()
         phone = (data.get("phone") or "").strip()
 
-        if not all([username, email, password, password_confirmed, firstName, lastName, phone]): #if any of the required fields are missing or empty, return a 400 error with a message indicating that all fields are required.
+        if not all([username, email, password, passwordConfirmed, firstName, lastName, phone]): #if any of the required fields are missing or empty, return a 400 error with a message indicating that all fields are required.
             user_ns.abort(400, "All fields are required")
 
-        if password != password_confirmed:
+        if password != passwordConfirmed:
             user_ns.abort(400, "Passwords do not match")
 
         # Check duplicate username
