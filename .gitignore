@@ -11,6 +11,8 @@
 # production
 */build
 
+frontend/.idea/*
+
 # misc
 .DS_Store
 .env.local

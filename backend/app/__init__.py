@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os
 
 load_dotenv()
@@ -11,6 +12,8 @@ bcrypt = Bcrypt()
 
 def create_app():
     app = Flask(__name__)
+
+    CORS(app) # Enable CORS for all routes and origins, allowing the frontend to communicate with the backend without CORS issues.
 
     # Initialize Flask-RESTX for API documentation and routing
     from flask_restx import Api
