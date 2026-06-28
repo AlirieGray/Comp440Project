@@ -26,6 +26,13 @@ def create_app():
         routes_pkg = importlib.import_module('app.routes')
         if hasattr(routes_pkg, 'user_ns'):
             api.add_namespace(routes_pkg.user_ns, path='/api/users')
+
+        if hasattr(routes_pkg, 'item_ns'):
+            api.add_namespace(routes_pkg.item_ns, path='/api/items')
+
+        if hasattr(routes_pkg, 'review_ns'):
+            api.add_namespace(routes_pkg.review_ns, path='/api/reviews')
+
     except Exception as e:
         print(f'Warning: Could not load routes namespace: {e}')
 
