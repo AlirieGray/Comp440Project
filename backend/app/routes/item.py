@@ -1,4 +1,5 @@
 from flask_restx import Namespace, Resource, fields
+from flask import request
 from app import db
 from app.models.item import Item
 from datetime import datetime #to enfore the daily limits
@@ -11,7 +12,7 @@ item_ns = Namespace("items", description="Item operations")
 
 item_model = item_ns.model("Item", {
     "title": fields.String(required=True, example="Potato"),
-    "description": fields.String(required=True, example="A fine imported peruvian potato"),
+    "description": fields.String(required=True, example="A fine peruvian potato"),
     "category": fields.String(required=True, example="Food"),
     "price": fields.Float(required=True, example=19.99),
     "owner": fields.String(required=True, example="test123")  # This will be the username of the owner, which is a foreign key to the User model.
@@ -89,3 +90,34 @@ class ItemList(Resource):
                 "created_at": new_item.created_at.isoformat()
             } # Return the created item details in the response, only for the swagger(i think)
         }, 201
+    
+
+
+
+search_parser = item_ns.parser()
+
+search_parser.add_argument(
+    "category",
+    type=str,
+    required=True,
+    location="args",
+    help="Category to search for"
+)
+
+@item_ns.route("/search")
+class SearchItems(Resource):
+
+    @item_ns.expect(search_parser)
+    @item_ns.marshal_list_with(item_model) #returns the same model as item_model, since we are returning the same fields as the item_model, but we can create a new model if we want to return different fields.
+    @item_ns.response(200, "Items found")
+    @item_ns.response(400, "Category is required")
+    def get(self):
+
+        args = search_parser.parse_args()
+
+        category = args["category"].strip().lower()
+
+        items = Item.query.filter_by(category=category).all()
+
+        return items
+    #Important note, if there is no maches, it returns '[]', which indicates that there are no items in that category.
