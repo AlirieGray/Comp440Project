@@ -29,7 +29,10 @@ def create_app():
 
         if hasattr(routes_pkg, 'item_ns'):
             api.add_namespace(routes_pkg.item_ns, path='/api/items')
-            
+
+        if hasattr(routes_pkg, 'review_ns'):
+            api.add_namespace(routes_pkg.review_ns, path='/api/reviews')
+
     except Exception as e:
         print(f'Warning: Could not load routes namespace: {e}')
 
