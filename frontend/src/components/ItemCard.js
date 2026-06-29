@@ -1,6 +1,16 @@
 import {Button, Card} from "@chakra-ui/react"
+import {useNavigate} from "react-router";
 
-function ItemCard({name, description}) {
+function ItemCard({name, id, description}) {
+
+    const navigate = useNavigate()
+
+    const handleClickLeaveAReview = (e) => {
+        e.preventDefault()
+        localStorage.setItem('itemID', id)
+        navigate('/review')
+    }
+    
     return (
         <Card.Root width="320px">
             <Card.Body gap="2">
@@ -10,7 +20,7 @@ function ItemCard({name, description}) {
                 </Card.Description>
             </Card.Body>
             <Card.Footer justifyContent="flex-end">
-                <Button variant="outline">View</Button>
+                <Button variant="outline" onClick={e => handleClickLeaveAReview(e)}>Leave a Review</Button>
             </Card.Footer>
         </Card.Root>
     )

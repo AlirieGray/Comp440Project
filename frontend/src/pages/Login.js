@@ -14,11 +14,15 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (password.length < 1 || username.length < 1) {
+            toast("Username and password may not be empty!")
+        }
         login()
     }
     
     return (
         <Flex width={500} flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>
+            <ToastContainer theme={"light"} closeOnClick={true}/>
             <Text marginBottom={25} fontSize={36}>Login</Text>
             <Field.Root>
                 <Field.Label>Username</Field.Label>

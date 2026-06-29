@@ -6,61 +6,39 @@ import {
     Flex,
     Input,
     InputGroup,
+    Group,
     Portal,
     ScrollArea,
     Select
 } from "@chakra-ui/react"
+import { useState } from "react"
 import {LuCirclePlus, LuSearch} from "react-icons/lu"
 import {useNavigate} from "react-router";
 
-function SearchBar() {
-    const categories = [
-        {
-            value: "Category One",
-            label: "Category One"
-        },
-        {
-            value: "Category One",
-            label: "Category One"
-        },
-    ]
+function SearchBar({onSearch}) {
+    const [category, setCategory] = useState("")
 
     const navigate = useNavigate()
 
     const handleClickNewItem = (e) => {
         e.preventDefault()
+        const itemID = localStorage.getItem('phone')
         navigate('/new-item')
+    }
+
+    const search = (e) => {
+        e.preventDefault()
+        onSearch(category)
     }
 
     return (
         <Flex padding={'10px'} flexDirection={'row'} alignItems={'center'} justifyContent={'space-between'}>
-            <InputGroup startElement={<LuSearch />}>
-                <Input placeholder="Search for an item" />
-            </InputGroup>
-            <Flex justifyContent={'flex-end'} width={'180px'}>
-                <Select.Root size={'md'} collection={createListCollection({items: categories})}>
-                    <Select.Control>
-                        <Select.Trigger>
-                            <Select.ValueText placeholder="Category" />
-                        </Select.Trigger>
-                        <Select.IndicatorGroup>
-                            <Select.Indicator />
-                        </Select.IndicatorGroup>
-                    </Select.Control>
-                    <Portal>
-                        <Select.Positioner>
-                            <Select.Content backgroundColor={'white'}>
-                                {categories.map((c) => (
-                                    <Select.Item item={c} key={c.value} >
-                                        {c.label}
-                                        <Select.ItemIndicator />
-                                    </Select.Item>
-                                ))}
-                            </Select.Content>
-                        </Select.Positioner>
-                    </Portal>
-                </Select.Root>
-            </Flex>
+            <Group startElement={<LuSearch />} attached w="full" maxW="sm">
+                <Input width={500} placeholder="Search for an item by category" value={category} onChange={e => {setCategory(e.target.value)} } />
+                <Button bg="bg.subtle" variant="outline" onClick={(e) => search(e)}>
+                    Search
+                </Button>
+            </Group>
             <Button marginLeft={'10px'} colorPalette="green" variant="solid" onClick={e => handleClickNewItem(e)}>
                 Add an Item <LuCirclePlus />
             </Button>

@@ -3,12 +3,19 @@ import { LuCirclePlus } from "react-icons/lu"
 import { useNavigate } from 'react-router'
 import SearchBar from '../components/SearchBar'
 import ItemCard from "../components/ItemCard";
+import {useEffect} from "react";
 
 function Dashboard() {
     const firstName = localStorage.getItem('firstName')
     const lastName = localStorage.getItem('lastName')
     const phone = localStorage.getItem('phone')
     const email = localStorage.getItem('email')
+    
+    const onSearch = (searchTerm) => {
+        console.log("search!" + searchTerm)
+    }
+
+    useEffect(() => {getItems()}, [])
     
     const items = [
         {name: 'First Item', description: 'My item description'},
@@ -23,7 +30,7 @@ function Dashboard() {
                 <Text>{`Phone: ${phone}`}</Text>
                 <Text>{`Email: ${email}`}</Text>
             </Flex>
-            <SearchBar />
+            <SearchBar onSearch={onSearch} />
             <Grid templateColumns="repeat(2, 1fr)" gap="6">
                 {items.map((item) => {
                     return (
