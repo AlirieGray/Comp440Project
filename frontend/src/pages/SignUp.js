@@ -31,7 +31,7 @@ function SignUp() {
 
     return (
         <Flex width={500} flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>
-            <ToastContainer theme={"light"} closeOnClick={true}/>
+            <ToastContainer theme={"dark"} closeOnClick={true}/>
             <Text marginBottom={25} fontSize={36}>Register</Text>
             
             <Field.Root marginBottom={'10px'}>

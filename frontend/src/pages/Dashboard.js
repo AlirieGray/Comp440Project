@@ -3,28 +3,23 @@ import { LuCirclePlus } from "react-icons/lu"
 import { useNavigate } from 'react-router'
 import SearchBar from '../components/SearchBar'
 import ItemCard from "../components/ItemCard";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {useGetItems} from "../hooks/items";
 
 function Dashboard() {
     const firstName = localStorage.getItem('firstName')
     const lastName = localStorage.getItem('lastName')
     const phone = localStorage.getItem('phone')
     const email = localStorage.getItem('email')
+    const [category, setCategory] = useState("")
+    const {items, getItems} = useGetItems(category)
     
     const onSearch = (searchTerm) => {
-        console.log("search!" + searchTerm)
+        setCategory(searchTerm)
+        getItems()
     }
     
-    const getItems = () => {
-        console.log('getting items')
-    }
-
-    useEffect(() => {getItems()}, [])
-    
-    const items = [
-        {name: 'First Item', description: 'My item description'},
-        {name: 'Second Item', description: 'Another item description'},
-    ]
+    //useEffect(() => {getItems()}, [])
     
     return (
         <Flex flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>
@@ -36,7 +31,7 @@ function Dashboard() {
             </Flex>
             <SearchBar onSearch={onSearch} />
             <Grid templateColumns="repeat(2, 1fr)" gap="6">
-                {items.map((item) => {
+                {items && items.map((item) => {
                     return (
                         <GridItem>
                             <ItemCard name={item.name} description={item.description} />

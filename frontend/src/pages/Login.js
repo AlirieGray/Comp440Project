@@ -26,7 +26,7 @@ function Login() {
     
     return (
         <Flex width={500} flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>
-            <ToastContainer theme={"light"} closeOnClick={true}/>
+            <ToastContainer theme={"dark"} closeOnClick={true}/>
             <Text marginBottom={25} fontSize={36}>Login</Text>
             <Field.Root>
                 <Field.Label>Username</Field.Label>
