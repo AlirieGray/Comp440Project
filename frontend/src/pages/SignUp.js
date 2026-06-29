@@ -9,6 +9,10 @@ import {useRegister} from "../hooks/register";
 import {ToastContainer, toast} from "react-toastify";
 
 function SignUp() {
+    const onToast = (msg) => {
+        toast(msg)
+    }
+    
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -16,35 +20,14 @@ function SignUp() {
     const [first, setFirst] = useState("")
     const [last, setLast] = useState("")
     const [phone, setPhone] = useState("")
-    const [register] = useRegister(username, password, passwordConfirmed, first, last, phone, email)
+    const [register] = useRegister(username, password, passwordConfirmed, first, last, phone, email, onToast)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let submitOk = true;
-        if (password !== passwordConfirmed) {
-            onToast("Passwords must match!")
-            submitOk = false
-        } 
-        if (first == '' || last == '') {
-            submitOk = false;
-            onToast('Name cannot be empty!')
-        }
-        if (email == '') {
-            submitOk = false;
-            onToast('Email cannot be empty!')
-        }
-        if (phone == '') {
-            submitOk = false;
-            onToast('Phone cannot be empty!')
-        }
-        if (submitOk) {
-            register()
-        }
+
+        register()
     }
 
-    const onToast = (msg) => {
-        toast(msg)
-    }
 
     return (
         <Flex width={500} flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>

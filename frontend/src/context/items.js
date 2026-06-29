@@ -1,14 +1,14 @@
 import React, { createContext, useState } from "react"
-export const ProjectsContext = createContext(null)
+export const ItemsContext = createContext(null)
 
 const ItemsContextProvider = ({ children })=> {
-    const [items, setItems] = useState<Array<Project>>([])
+    const [items, setItems] = useState([])
 
-    return <ProjectsContext.Provider value={{
+    return <ItemsContext.Provider value={{
         items, setItems
     }}>
         {children}
-    </ProjectsContext.Provider>
+    </ItemsContext.Provider>
 }
 
 export default ItemsContextProvider

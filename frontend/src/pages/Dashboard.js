@@ -14,6 +14,10 @@ function Dashboard() {
     const onSearch = (searchTerm) => {
         console.log("search!" + searchTerm)
     }
+    
+    const getItems = () => {
+        console.log('getting items')
+    }
 
     useEffect(() => {getItems()}, [])
     

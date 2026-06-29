@@ -8,9 +8,13 @@ import {useLogin} from "../hooks/login"
 import { ToastContainer, toast } from 'react-toastify'
 
 function Login() {
+    const onToast = (msg) => {
+        toast(msg)
+    }
+    
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
-    const [login] = useLogin(username, password)
+    const [login] = useLogin(username, password, onToast)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
