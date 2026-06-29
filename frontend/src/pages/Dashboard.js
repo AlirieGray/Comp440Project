@@ -34,7 +34,7 @@ function Dashboard() {
                 {items && items.map((item) => {
                     return (
                         <GridItem>
-                            <ItemCard name={item.name} description={item.description} />
+                            <ItemCard title={item.title} category={item.category} owner={item.owner} description={item.description} price={item.price} />
                         </GridItem>
                     );
                 })}

@@ -22,12 +22,10 @@ export function useRegister(username, password, passwordConfirmed, firstName, la
         try {
             fetch('http://localhost:5000/api/users/register', registerReqOptions).then(res => {
                 if (res.status !== 200) {
-                    console.log(res)
                     receivedError = true
                 }
                 return res.json()
             }).then(json => {
-                console.log(json)
                 if (receivedError) {
                     onToast(json['message'])
                 } else {
