@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router'
 
-export function useLogin(username, password) {
+export function useLogin(username, password, onToast) {
     const navigate = useNavigate()
 
     const requestOptions = {
@@ -12,21 +12,25 @@ export function useLogin(username, password) {
     }
 
     const login = async () => {
+        let receivedErr = false
         try {
             fetch('http://localhost:5000/api/users/login', requestOptions).then((res) => {
                 if (res.status !== 200) {
-                    throw new Error("Could not login")
-                } else {
-                    return res.json()
+                    receivedErr = true
                 }
+                return res.json()
             }).then((resJSON) => {
-                console.log(resJSON)
-                localStorage.setItem('firstName', resJSON['firstName'])
-                localStorage.setItem('lastName', resJSON['lastName'])
-                localStorage.setItem('email', resJSON['email'])
-                localStorage.setItem('phone', resJSON['phone'])
-                
-                navigate("/")
+                if (receivedErr) {
+                    onToast(resJSON['message'])
+                } else {
+                    localStorage.setItem('firstName', resJSON['firstName'])
+                    localStorage.setItem('lastName', resJSON['lastName'])
+                    localStorage.setItem('email', resJSON['email'])
+                    localStorage.setItem('phone', resJSON['phone'])
+                    localStorage.setItem('username', resJSON['username'])
+                    
+                    navigate("/")
+                }
             }).catch((err) => {
                 console.error(err)
             })
