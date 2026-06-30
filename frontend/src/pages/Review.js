@@ -2,10 +2,15 @@ import {Field, Input, Flex, Text, Button, Select, Portal, createListCollection} 
 import {LuArrowLeft} from "react-icons/lu";
 import {useState} from "react";
 import {useNavigate} from "react-router";
+import {usePostReview} from "../hooks/items";
+import {toast, ToastContainer} from "react-toastify";
 
 
 function Review() {
     const navigate = useNavigate()
+    const onToast = (msg) => {
+        toast(msg)
+    }
 
     const itemID = localStorage.getItem('itemID')
     const itemName = localStorage.getItem('itemName')
@@ -13,6 +18,7 @@ function Review() {
 
     const [reviewContent, setReviewContent] = useState('')
     const [reviewLevel, setReviewLevel] = useState('')
+    const [postReview] = usePostReview(itemID, reviewLevel, reviewContent, onToast)
 
     const reviewLevels = createListCollection({
         items: [
@@ -23,8 +29,14 @@ function Review() {
         ],
     })
     
+    const onSubmitReview = (e) => {
+        e.preventDefault()
+        postReview()
+    }
+    
     return (
         <Flex flexDirection="column" justifyContent={'flex-start'}>
+            <ToastContainer theme={"dark"} closeOnClick={true}/>
             <Flex width={200} paddingBottom={'100px'}>
                 <Button colorPalette="black" variant={'subtle'} onClick={() => navigate('/')}>
                     <LuArrowLeft /> Back to Home
@@ -67,6 +79,8 @@ function Review() {
                     <Field.Label>Review</Field.Label>
                     <Input value={reviewContent} onChange={(e) => setReviewContent(e.target.value)} placeholder="Leave your review description here!" />
                 </Field.Root>
+
+                <Button marginTop={6} onClick={e => onSubmitReview(e)}>Submit</Button>
             </Flex>
         </Flex>
     );

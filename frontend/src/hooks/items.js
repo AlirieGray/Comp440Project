@@ -45,9 +45,9 @@ export function usePostItem(title, description, categoryArr, price, onToast) {
     const postItem = async () => {
         let receivedErr = false
         try {
-            fetch('http://localhost:5000/api/items', requestOptions).then(res => {
+            fetch('http://localhost:5000/api/items/', requestOptions).then(res => {
                 console.log(res)
-                if (res.status !== 200) {
+                if (res.status !== 200 && res.status !== 201) {
                     receivedErr = true
                 }
                 return res.json()
@@ -67,5 +67,48 @@ export function usePostItem(title, description, categoryArr, price, onToast) {
     }
 
     return [postItem]
+    
+}
+
+export function usePostReview(item_id, ratingArr, description, onToast){
+    const reviewer = localStorage.getItem('username')
+    const navigate = useNavigate()
+
+    let rating = ''
+    if (ratingArr.length >= 1) {
+        rating = ratingArr[0]
+    }
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json'},
+        body: JSON.stringify({item_id, rating, description, reviewer})
+    }
+    
+    const postReview = async () => {
+        let receivedErr = false
+        try {
+            fetch('http://localhost:5000/api/reviews/', requestOptions).then(res => {
+                console.log(res)
+                if (res.status !== 200 && res.status !== 201) {
+                    receivedErr = true
+                }
+                return res.json()
+            }).then(json => {
+                if (receivedErr) {
+                    onToast(json['message'])
+                } else {
+                    navigate('/')
+                }
+                console.log(json)
+            }).catch((err) => {
+                console.error(err)
+            })
+        } catch(e) {
+            console.error(e)
+        }
+    }
+    
+    return [postReview]
     
 }

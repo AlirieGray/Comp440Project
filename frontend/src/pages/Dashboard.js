@@ -32,9 +32,10 @@ function Dashboard() {
             <SearchBar onSearch={onSearch} />
             <Grid templateColumns="repeat(2, 1fr)" gap="6">
                 {items && items.map((item) => {
+                    console.log(item)
                     return (
                         <GridItem>
-                            <ItemCard title={item.title} category={item.category} owner={item.owner} description={item.description} price={item.price} />
+                            <ItemCard id={item.id} title={item.title} category={item.category} owner={item.owner} description={item.description} price={item.price} />
                         </GridItem>
                     );
                 })}

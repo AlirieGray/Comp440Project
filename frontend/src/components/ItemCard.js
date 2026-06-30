@@ -7,6 +7,7 @@ function ItemCard({title, id, price, description, category, owner}) {
 
     const handleClickLeaveAReview = (e) => {
         e.preventDefault()
+        console.log(id)
         localStorage.setItem('itemID', id)
         localStorage.setItem('itemName', title)
         localStorage.setItem('itemDescription', description)
