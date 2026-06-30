@@ -3,13 +3,20 @@ import { Link } from 'react-router'
 import { useState } from "react"
 import { LuArrowLeft, LuDollarSign } from "react-icons/lu"
 import { useNavigate } from 'react-router'
+import {toast, ToastContainer} from "react-toastify";
+import {usePostItem} from "../hooks/items";
 
 function NewItemForm() {
+    const onToast = (msg) => {
+        toast(msg)
+    }
+    
     const [itemName, setItemName] = useState("")
     const [itemDescription, setItemDescription] = useState("")
     const [category, setCategory] = useState([])
     const [price, setPrice] = useState('')
     const [priceAsNumber, setPriceAsNumber] = useState(0)
+    const [postItem] = usePostItem(itemName, itemDescription, category, priceAsNumber, onToast)
 
     const navigate = useNavigate()
 
@@ -21,9 +28,15 @@ function NewItemForm() {
             { label: "Books", value: "books" },
         ],
     })
+
+    const onSubmitNewItem = (e) => {
+        e.preventDefault()
+        postItem(itemName, itemDescription, category, priceAsNumber)
+    }
     
     return (
         <Flex flexDirection="column" justifyContent={'flex-start'}>
+            <ToastContainer theme={"dark"} closeOnClick={true}/>
             <Flex width={200} paddingBottom={'100px'}>
                 <Button colorPalette="black" variant={'subtle'} onClick={() => navigate('/')}>
                     <LuArrowLeft /> Back to Home 
@@ -92,7 +105,7 @@ function NewItemForm() {
                         </Select.Positioner>
                     </Portal>
                 </Select.Root>
-                <Button marginTop={6}>Submit</Button>
+                <Button marginTop={6} onClick={e => onSubmitNewItem(e)}>Submit</Button>
             </Flex>
         </Flex>
     );

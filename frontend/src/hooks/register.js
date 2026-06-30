@@ -21,7 +21,7 @@ export function useRegister(username, password, passwordConfirmed, firstName, la
         let receivedError = false
         try {
             fetch('http://localhost:5000/api/users/register', registerReqOptions).then(res => {
-                if (res.status !== 200) {
+                if (res.status !== 200 && res.status !== 201) {
                     receivedError = true
                 }
                 return res.json()
@@ -41,6 +41,7 @@ export function useRegister(username, password, passwordConfirmed, firstName, la
                         }
                         localStorage.setItem('firstName', resJSON['firstName'])
                         localStorage.setItem('lastName', resJSON['lastName'])
+                        localStorage.setItem('username', resJSON['username'])
                         localStorage.setItem('email', resJSON['email'])
                         localStorage.setItem('phone', resJSON['phone'])
         

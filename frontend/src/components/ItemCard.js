@@ -8,6 +8,8 @@ function ItemCard({title, id, price, description, category, owner}) {
     const handleClickLeaveAReview = (e) => {
         e.preventDefault()
         localStorage.setItem('itemID', id)
+        localStorage.setItem('itemName', title)
+        localStorage.setItem('itemDescription', description)
         navigate('/review')
     }
     

@@ -27,3 +27,45 @@ export function useGetItems(category) {
     
     return {items, getItems}
 }
+
+export function usePostItem(title, description, categoryArr, price, onToast) {
+    const owner = localStorage.getItem('username')
+    const navigate = useNavigate()
+    let category = ''
+    if (categoryArr.length >= 1) {
+        category = categoryArr[0]
+    }
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json'},
+        body: JSON.stringify({title, description, category, price, owner})
+    }
+
+    const postItem = async () => {
+        let receivedErr = false
+        try {
+            fetch('http://localhost:5000/api/items', requestOptions).then(res => {
+                console.log(res)
+                if (res.status !== 200) {
+                    receivedErr = true
+                }
+                return res.json()
+            }).then(json => {
+                if (receivedErr) {
+                    onToast(json['message'])
+                } else {
+                    navigate('/')
+                }
+                console.log(json)
+            }).catch((err) => {
+                console.error(err)
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    return [postItem]
+    
+}

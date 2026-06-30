@@ -27,6 +27,7 @@ export function useLogin(username, password, onToast) {
                     localStorage.setItem('lastName', resJSON['lastName'])
                     localStorage.setItem('email', resJSON['email'])
                     localStorage.setItem('phone', resJSON['phone'])
+                    localStorage.setItem('username', resJSON['username'])
                     
                     navigate("/")
                 }

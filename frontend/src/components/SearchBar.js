@@ -22,7 +22,6 @@ function SearchBar({onSearch}) {
 
     const handleClickNewItem = (e) => {
         e.preventDefault()
-        const itemID = localStorage.getItem('phone')
         navigate('/new-item')
     }
 
