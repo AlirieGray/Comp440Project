@@ -17,6 +17,14 @@ item_model = item_ns.model("Item", {
     "price": fields.Float(required=True, example=19.99),
     "owner": fields.String(required=True, example="test123")  # This will be the username of the owner, which is a foreign key to the User model.
 })
+item_model_with_id = item_ns.model("Item", {
+    "id": fields.Float(required=True),
+    "title": fields.String(required=True, example="Potato"),
+    "description": fields.String(required=True, example="A fine peruvian potato"),
+    "category": fields.String(required=True, example="Food"),
+    "price": fields.Float(required=True, example=19.99),
+    "owner": fields.String(required=True, example="test123")  # This will be the username of the owner, which is a foreign key to the User model.
+})
 #Note for team:
 #Once we implement user authentication, we will not require the owner field to be provided by the user, as it will be derived from the authenticated user's information.
 
@@ -108,7 +116,7 @@ search_parser.add_argument(
 class SearchItems(Resource):
 
     @item_ns.expect(search_parser)
-    @item_ns.marshal_list_with(item_model) #returns the same model as item_model, since we are returning the same fields as the item_model, but we can create a new model if we want to return different fields.
+    @item_ns.marshal_list_with(item_model_with_id) #returns the same model as item_model, since we are returning the same fields as the item_model, but we can create a new model if we want to return different fields.
     @item_ns.response(200, "Items found")
     @item_ns.response(400, "Category is required")
     def get(self):

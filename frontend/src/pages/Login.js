@@ -8,17 +8,25 @@ import {useLogin} from "../hooks/login"
 import { ToastContainer, toast } from 'react-toastify'
 
 function Login() {
+    const onToast = (msg) => {
+        toast(msg)
+    }
+    
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
-    const [login] = useLogin(username, password)
+    const [login] = useLogin(username, password, onToast)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (password.length < 1 || username.length < 1) {
+            toast("Username and password may not be empty!")
+        }
         login()
     }
     
     return (
         <Flex width={500} flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>
+            <ToastContainer theme={"dark"} closeOnClick={true}/>
             <Text marginBottom={25} fontSize={36}>Login</Text>
             <Field.Root>
                 <Field.Label>Username</Field.Label>
