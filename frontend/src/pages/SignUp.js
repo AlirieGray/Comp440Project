@@ -6,8 +6,13 @@ import { Link } from 'react-router'
 import { useState } from "react"
 import {useLogin} from "../hooks/login";
 import {useRegister} from "../hooks/register";
+import {ToastContainer, toast} from "react-toastify";
 
 function SignUp() {
+    const onToast = (msg) => {
+        toast(msg)
+    }
+    
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -15,15 +20,18 @@ function SignUp() {
     const [first, setFirst] = useState("")
     const [last, setLast] = useState("")
     const [phone, setPhone] = useState("")
-    const [register] = useRegister(username, password, passwordConfirmed, first, last, phone, email)
+    const [register] = useRegister(username, password, passwordConfirmed, first, last, phone, email, onToast)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
         register()
     }
 
+
     return (
         <Flex width={500} flexDirection="column" justifyContent={'center'} alignItems={'center'} paddingBottom={'100px'}>
+            <ToastContainer theme={"dark"} closeOnClick={true}/>
             <Text marginBottom={25} fontSize={36}>Register</Text>
             
             <Field.Root marginBottom={'10px'}>

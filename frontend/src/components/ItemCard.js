@@ -1,16 +1,35 @@
-import {Button, Card} from "@chakra-ui/react"
+import {Button, Card, Text} from "@chakra-ui/react"
+import {useNavigate} from "react-router";
 
-function ItemCard({name, description}) {
+function ItemCard({title, id, price, description, category, owner}) {
+
+    const navigate = useNavigate()
+
+    const handleClickLeaveAReview = (e) => {
+        e.preventDefault()
+        console.log(id)
+        localStorage.setItem('itemID', id)
+        localStorage.setItem('itemName', title)
+        localStorage.setItem('itemDescription', description)
+        navigate('/review')
+    }
+    
     return (
         <Card.Root width="320px">
             <Card.Body gap="2">
-                <Card.Title mt="2">{name}</Card.Title>
+                <Card.Title mt="2">{title}</Card.Title>
                 <Card.Description>
-                    {description}
+                    <Text>{description}</Text>
+                    <Text>{price.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                    })}</Text>
+                    <Text>Category: {category}</Text>
+                    <Text>Owner: {owner}</Text>
                 </Card.Description>
             </Card.Body>
             <Card.Footer justifyContent="flex-end">
-                <Button variant="outline">View</Button>
+                <Button variant="outline" onClick={e => handleClickLeaveAReview(e)}>Leave a Review</Button>
             </Card.Footer>
         </Card.Root>
     )
